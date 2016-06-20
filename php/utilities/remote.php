@@ -4,7 +4,7 @@
 	(i.e. by URL). */
 
 // Connection through CURL
-function fConnectCurl($sURL)
+function connect_curl($sURL)
 {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $sURL);

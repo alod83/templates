@@ -2,7 +2,7 @@
 
 /* Connection to a mysql database. This function returns 
  * the reference to the connection. */
-function mysqlconnect($db_name, $user, $password)
+function mysqlconnect($user, $password,$db_name)
 {
 	$conn = mysqli_connect("localhost",$user, $password);
 
