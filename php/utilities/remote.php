@@ -12,6 +12,7 @@ function connect_curl($sURL)
 	curl_setopt($ch, CURLOPT_TIMEOUT, 60); //timeout in seconds
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
 	
 	$aReturn = array();
 	$aReturn['response'] = curl_exec($ch);
@@ -24,7 +25,7 @@ function connect_curl($sURL)
 }
 
 // Connection to a DOM document (XML or HTML)
-function fConnectDom($sURL, $sXPATH = false, $sType = "XML")
+function connect_DOM($sURL, $sXPATH = false, $sType = "XML")
 {
 	// rimuovo tutti i caratteri che danno problemi
 	strip_tags(preg_replace("/&/", "",$sURL));
@@ -42,10 +43,29 @@ function fConnectDom($sURL, $sXPATH = false, $sType = "XML")
 }
 
 // Run a XPATH query
-function fXPATH($oDOM, $sXPATH)
+function XPATH($oDOM, $sXPATH)
 {
 	$oDomXPATH = new DOMXPath($oDOM);
 	$oNodeList = $oDomXPATH->query( $sXPATH );
 	return $oNodeList;
+}
+
+// This function gets nodes values from a node list where each node contains a text
+// The variable $ev contains an array of values to be excluded from the result
+function get_nv_from_nl($nodes_list, $ev = false)
+{
+	// array of nodes values
+	$nv = array();
+	foreach($nodes_list as $node)
+	{
+		$property = trim($node->nodeValue);
+		if($ev)
+		{
+			if(!in_array($property,$ev))
+				$nv[] = trim($node->nodeValue);
+		}
+			
+	}
+	return $nv;
 }
 ?>
