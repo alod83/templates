@@ -12,6 +12,16 @@
       		<tbody id="dtb"></tbody>
     		</table>
 		<script src="js/dynamic_table.js" type="text/javascript"></script>
+		<script>
+		var thead_data = ["id", "author", "book"];
+
+		var tbody_data = [	
+		                   [1,"Manzoni","I promessi Sposi"],
+		                   [2,"Alighieri","La Divina Commedia"],
+		                   [3,"Ariosto",	"Orlando Furioso"],
+		                   [4,"Tasso","Gerusalemme Liberata"]];
+		build_table(thead_data, tbody_data);
 		
+		</script>
 	</body>
 </html>

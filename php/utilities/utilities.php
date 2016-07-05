@@ -17,6 +17,24 @@ function mysqlconnect($user, $password,$db_name = null)
 }
 
 /*
+ * This function executes a mysql query and applies function $f to the query result
+ * f must be in tollowing form f($row, $return)
+ * The best way to invoke this function is the following:
+ * $result = mysqlquery($conn,$query, $arg, function ($row, $arg, &aReturn){ // do something; });
+ * WARNING: pass $aReturn by reference
+ */
+function mysqlquery($conn,$q,$arg,$f)
+{
+	$oResult = mysqli_query($conn,$q);
+	$aReturn = array();
+	if($oResult !== false && mysqli_num_rows($oResult) > 0)
+		while($aRow = mysqli_fetch_assoc($oResult))
+			$f($aRow,$arg,$aReturn);		
+	return $aReturn;
+}
+
+
+/*
  * This function parses the stdin.
  * $opts should be in a form similar to 's:n:f:l:h'
  */
@@ -46,5 +64,6 @@ function get_input($opts)
 	}
 	return $input;
 }
+
 
 ?>
