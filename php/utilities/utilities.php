@@ -37,22 +37,24 @@ function mysqlquery($conn,$q,$arg,$f)
 /*
  * This function parses the stdin.
  * $opts should be in a form similar to 's:n:f:l:h'
+ * $opts - mandatory parameters
+ * $oopts - optional parameters
  */
-function get_input($opts)
+function get_input($opts, $oopts = false)
 {
 	// WARNING: this function works only with inputs having a value
 	// remove last : to avoid the final empty string
 	$opts_array = explode(":",substr($opts, 0, strlen($opts)-1));
 		
 	$check = false;
-	$input = getopt($opts);
+	
+	$input = getopt($oopts ? $opts.$oopts : $opts);
 	
 	// check whether the array is empty
 	if(empty($input))
 	{
 		$check = true;
 	}
-	
 	// check whether all the parameters have been set
 	foreach ($opts_array as $opt)
 		if(!in_array($opt, array_keys($input))) $check = true;

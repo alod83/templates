@@ -46,7 +46,7 @@ function connect_DOM($sURL, $sXPATH = false, $sType = "XML")
 function XPATH($oDOM, $sXPATH)
 {
 	$oDomXPATH = new DOMXPath($oDOM);
-	$oNodeList = $oDomXPATH->query( $sXPATH );
+	$oNodeList = @$oDomXPATH->query( $sXPATH );
 	return $oNodeList;
 }
 
@@ -58,14 +58,32 @@ function get_nv_from_nl($nodes_list, $ev = false)
 	$nv = array();
 	foreach($nodes_list as $node)
 	{
-		$property = trim($node->nodeValue);
+		$property = trim(addslashes($node->nodeValue));
 		if($ev)
 		{
 			if(!in_array($property,$ev))
-				$nv[] = trim($node->nodeValue);
+				$nv[] = $property;
 		}
+		else 
+			$nv[] = $property;
 			
 	}
 	return $nv;
+}
+
+// This function a specific attribute value, given an attribute name
+function get_attrv_from_nl($nodes_list, $attrn)
+{
+	// array of attribute values
+	$attrv = array();
+	foreach($nodes_list as $node)
+	{
+		foreach($node->attributes as $attr)
+		{
+			if(strcmp($attr->name, $attrn) == 0)
+				$attrv [] = $attr->value;
+		}
+	}
+	return $attrv;
 }
 ?>
