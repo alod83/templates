@@ -67,5 +67,20 @@ function get_input($opts, $oopts = false)
 	return $input;
 }
 
+function extract_tokens($sTitle)
+{
+	include('stopwords_it.php');
+	$aTokens = explode(" ", strtolower(str_replace("'"," ",$sTitle)));
+	$aReturn = array();
+	foreach($aTokens as $sToken)
+	{
+		// elimino le stop words
+		if(!in_array($sToken, $stopwords_it))
+		{
+			$aReturn [] = $sToken;
+		}
+	}
+	return $aReturn;
+}
 
 ?>
