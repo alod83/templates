@@ -1,8 +1,9 @@
 import numpy as np
+from math import floor
 
 def get_position(x,cx,x_min):
     if cx > 0:
-        xg = round((x - x_min)/cx + x_min)
+        xg = floor((x - x_min)/cx)+1
     else:
         xg = -1
     return xg
