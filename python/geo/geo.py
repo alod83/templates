@@ -5,7 +5,7 @@ from math import copysign
 def get_position(x,cx,type):
     if cx > 0:
         if type == "lng":
-            xg = copysign(floor((abs(x)/cx)%180),x)
+            xg = floor(copysign((abs(x)%180),x)/cx)
             if xg == -0:
                 xg = 0 
         else:
@@ -20,4 +20,3 @@ def get_position_in_grid(x, y, cx, cy):
     xg = get_position(x,cx,"lng")
     yg = get_position(y,cy,"lat")
     return np.array([xg, yg])
-
